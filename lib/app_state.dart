@@ -97,6 +97,8 @@ class FFAppState extends ChangeNotifier {
     }
   }
 
+  
+
   String _searchText = '';
   String get searchText => _searchText;
   set searchText(String value) {
