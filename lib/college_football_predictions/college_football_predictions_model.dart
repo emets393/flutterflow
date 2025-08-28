@@ -32,4 +32,47 @@ class CollegeFootballPredictionsModel
 
   @override
   void dispose() {}
+
+  // Expose convenience methods to update app state for filters
+  void setSelectedTeam(String? value) {
+    FFAppState().update(() {
+      FFAppState().selectedTeam = value;
+      FFAppState().page = 0;
+    });
+  }
+
+  void setSelectedDate(DateTime? value) {
+    FFAppState().update(() {
+      FFAppState().selectedDate = value;
+      FFAppState().page = 0;
+    });
+  }
+
+  void setMarketType(String value) {
+    FFAppState().update(() {
+      FFAppState().marketType = value;
+      FFAppState().page = 0;
+    });
+  }
+
+  void setMinConfidence(double value) {
+    FFAppState().update(() {
+      FFAppState().minConfidence = value;
+      FFAppState().page = 0;
+    });
+  }
+
+  void nextPage() {
+    FFAppState().update(() {
+      FFAppState().page = FFAppState().page + 1;
+    });
+  }
+
+  void previousPage() {
+    FFAppState().update(() {
+      if (FFAppState().page > 0) {
+        FFAppState().page = FFAppState().page - 1;
+      }
+    });
+  }
 }
