@@ -36,7 +36,14 @@ class NFLListBettingLinesCall {
 }
 
 class GetCFBPredictionsLatestCall {
-  static Future<ApiCallResponse> call() async {
+  static Future<ApiCallResponse> call({
+    String? team,
+    String? marketType,
+    double? minConfidence,
+    String? onDate, // yyyy-mm-dd
+    int? limit,
+    int? offset,
+  }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'GetCFBPredictionsLatest',
       apiUrl:
@@ -52,6 +59,12 @@ class GetCFBPredictionsLatestCall {
       params: {
         'select': "*",
         'order': "kickoff_time.asc",
+        if (team != null && team.isNotEmpty) 'team': 'ilike.${team}%',
+        if (marketType != null && marketType.isNotEmpty) 'market_type': marketType,
+        if (minConfidence != null) 'confidence': 'gte.${minConfidence}',
+        if (onDate != null && onDate.isNotEmpty) 'game_date': 'eq.${onDate}',
+        if (limit != null) 'limit': '$limit',
+        if (offset != null) 'offset': '$offset',
       },
       returnBody: true,
       encodeBodyUtf8: false,
